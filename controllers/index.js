@@ -87,7 +87,7 @@ const createLike = async (req, res, next) => {
         },
       });
       res.status(201).json({
-        message: "post disliked",
+        message: "post unliked",
         result,
       });
     } else {
