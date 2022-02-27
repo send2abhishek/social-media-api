@@ -2,6 +2,7 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const PostLikes = require("../models/postLikes");
+const { post } = require("../routes");
 
 const fetchFeeds = async (req, res, next) => {
   try {
@@ -39,6 +40,22 @@ const fetchFeeds = async (req, res, next) => {
   }
 };
 
+const createPost = async (req, res, next) => {
+  try {
+    const result = await Post.create(req.body);
+    res.status(201).json({
+      message: "post created",
+      result,
+    });
+  } catch (ex) {
+    res.status(500).json({
+      error: ex.message,
+    });
+    next(ex);
+  }
+};
+
 module.exports = {
   fetchFeeds,
+  createPost,
 };

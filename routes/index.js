@@ -2,13 +2,10 @@
 const express = require("express");
 const route = express.Router();
 
-const { fetchFeeds } = require("../controllers/");
+const { validateCreatePost } = require("../middlewares/validateRequests");
+const { fetchFeeds, createPost } = require("../controllers/");
 
-// const dimActivityController = require("../controllers/DataManagement/dimActivity");
-
-// define all routes of web sever
-
-// activity routes
 route.get("/feeds", fetchFeeds);
+route.post("/create-post", validateCreatePost, createPost);
 
 module.exports = route;
