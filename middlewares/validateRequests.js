@@ -75,6 +75,16 @@ const validateCreateLike = (req, res, next) => {
   }
 };
 
+const validatePostId = (req, res, next) => {
+  if (!req.params.postId) {
+    res.status(400).json({
+      error: "postId is missing as params in request",
+    });
+  } else {
+    next();
+  }
+};
+
 function checkBody(payload) {
   return payload && isEmpty(payload);
 }
@@ -83,4 +93,5 @@ module.exports = {
   validateCreatePost,
   validateCreateComment,
   validateCreateLike,
+  validatePostId,
 };

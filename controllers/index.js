@@ -105,6 +105,106 @@ const createLike = async (req, res, next) => {
   }
 };
 
+const fetchPostById = async (req, res, next) => {
+  try {
+    const postId = req.params.postId;
+    const result = await Post.findOne({
+      where: {
+        id: postId,
+      },
+      attributes: ["id", "title", "content", "userId"],
+      include: [
+        {
+          model: User,
+          attributes: ["name", "email", "created_at"],
+        },
+        {
+          model: Comment,
+          as: "comments",
+          attributes: ["comment"],
+          include: {
+            model: User,
+            attributes: ["name", "email", "created_at"],
+          },
+        },
+        {
+          model: PostLikes,
+          as: "likes",
+          attributes: ["postId"],
+          include: {
+            model: User,
+            attributes: ["name", "email"],
+          },
+        },
+      ],
+    });
+    res.status(201).json(result);
+  } catch (ex) {
+    res.status(500).json({
+      error: ex.message,
+    });
+    next(ex);
+  }
+};
+
+const fetchLikesByPostId = async (req, res, next) => {
+  try {
+    const postId = req.params.postId;
+    const result = await Post.findOne({
+      where: {
+        id: postId,
+      },
+      attributes: ["id"],
+      include: [
+        {
+          model: PostLikes,
+          as: "likes",
+          attributes: ["postId"],
+          include: {
+            model: User,
+            attributes: ["id", "name", "email"],
+          },
+        },
+      ],
+    });
+    res.status(201).json(result);
+  } catch (ex) {
+    res.status(500).json({
+      error: ex.message,
+    });
+    next(ex);
+  }
+};
+
+const fetchCommentByPostId = async (req, res, next) => {
+  try {
+    const postId = req.params.postId;
+    const result = await Post.findOne({
+      where: {
+        id: postId,
+      },
+      attributes: ["id"],
+      include: [
+        {
+          model: Comment,
+          as: "comments",
+          attributes: ["comment"],
+          include: {
+            model: User,
+            attributes: ["id", "name", "email", "created_at"],
+          },
+        },
+      ],
+    });
+    res.status(201).json(result);
+  } catch (ex) {
+    res.status(500).json({
+      error: ex.message,
+    });
+    next(ex);
+  }
+};
+
 async function isPostLikeExists(userId, postId) {
   const result = await PostLikes.findOne({
     where: {
@@ -125,4 +225,7 @@ module.exports = {
   createPost,
   createComment,
   createLike,
+  fetchPostById,
+  fetchLikesByPostId,
+  fetchCommentByPostId,
 };
