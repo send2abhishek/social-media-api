@@ -10,9 +10,9 @@ const validateCreatePost = (req, res, next) => {
   }
 
   const schema = Joi.object({
-    title: Joi.string().min(5),
-    content: Joi.string().min(5).max(3000),
-    userId: Joi.number().min(1).max(8),
+    title: Joi.string().min(2),
+    content: Joi.string().min(2).max(3000),
+    userId: Joi.number().min(1),
   });
 
   const { error } = schema.validate(req.body);
