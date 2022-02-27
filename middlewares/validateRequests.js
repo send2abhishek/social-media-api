@@ -51,6 +51,30 @@ const validateCreateComment = (req, res, next) => {
   }
 };
 
+const validateCreateLike = (req, res, next) => {
+  if (checkBody(req.body)) {
+    res.status(400).json({
+      error: "empty body",
+    });
+    return;
+  }
+
+  const schema = Joi.object({
+    postId: Joi.number().min(1).max(8),
+    userId: Joi.number().min(1).max(8),
+  });
+
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    res.status(400).json({
+      error: error.message,
+    });
+  } else {
+    next();
+  }
+};
+
 function checkBody(payload) {
   return payload && isEmpty(payload);
 }
@@ -58,4 +82,5 @@ function checkBody(payload) {
 module.exports = {
   validateCreatePost,
   validateCreateComment,
+  validateCreateLike,
 };
