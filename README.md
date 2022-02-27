@@ -8,6 +8,7 @@
 - supports mysql db. Configure your database and define connection strings in env file
 
 - After setting up environment file and node modules installation hit npm start
+- There is seed file which will setup the test data.
 - Server will start at port 5000 default. If you wish to alter this define PORT as key and assign value.
 - if you face any issue shoot me email- send2abhishek@live.com
 
