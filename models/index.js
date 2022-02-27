@@ -37,6 +37,14 @@ Post.hasMany(PostLikes, {
   as: "likes",
 });
 
+Post.belongsTo(User, {
+  foreignKey: {
+    name: "userId",
+    allowNull: false,
+    field: "user_id",
+  },
+});
+
 PostLikes.belongsTo(User, {
   foreignKey: {
     name: "userId",
