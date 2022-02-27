@@ -55,7 +55,23 @@ const createPost = async (req, res, next) => {
   }
 };
 
+const createComment = async (req, res, next) => {
+  try {
+    const result = await Comment.create(req.body);
+    res.status(201).json({
+      message: "comment created",
+      result,
+    });
+  } catch (ex) {
+    res.status(500).json({
+      error: ex.message,
+    });
+    next(ex);
+  }
+};
+
 module.exports = {
   fetchFeeds,
   createPost,
+  createComment,
 };

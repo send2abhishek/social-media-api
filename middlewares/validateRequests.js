@@ -15,7 +15,32 @@ const validateCreatePost = (req, res, next) => {
     userId: Joi.number().min(1).max(8),
   });
 
-  const { error, value } = schema.validate(req.body);
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    res.status(400).json({
+      error: error.message,
+    });
+  } else {
+    next();
+  }
+};
+
+const validateCreateComment = (req, res, next) => {
+  if (checkBody(req.body)) {
+    res.status(400).json({
+      error: "empty body",
+    });
+    return;
+  }
+
+  const schema = Joi.object({
+    comment: Joi.string().min(3),
+    postId: Joi.number().min(1).max(8),
+    userId: Joi.number().min(1).max(8),
+  });
+
+  const { error } = schema.validate(req.body);
 
   if (error) {
     res.status(400).json({
@@ -32,4 +57,5 @@ function checkBody(payload) {
 
 module.exports = {
   validateCreatePost,
+  validateCreateComment,
 };
