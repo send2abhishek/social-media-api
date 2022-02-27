@@ -11,8 +11,7 @@
 - Server will start at port 5000 default. If you wish to alter this define PORT as key and assign value.
 - if you face any issue shoot me email- send2abhishek@live.com
 
-
-# For reference attached Er diagram and postman collection.
+- For reference attached Er diagram and postman collection.
 
 
 Thanks for visiting
